@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BookCollection.Models
 {
@@ -25,6 +26,7 @@ namespace BookCollection.Models
             AuthorLastName = authorlastname;
             Genre = genre;
             NumberOfPages = numberofpages;
+
         }      
 
         public override string ToString()
