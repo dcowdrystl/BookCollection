@@ -52,6 +52,7 @@ else
                 <td>@book.AuthorLastName</td>
                 <td>@book.Genre</td>
                 <td>@book.NumberOfPages</td>
+                <td><a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">Edit Book</a></td>
             </tr>
         }
     </table>

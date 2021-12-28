@@ -54,5 +54,28 @@ namespace BookCollection.Controllers
 
             return Redirect("/Books");
         }
+
+        [HttpGet]
+        [Route("Books/Edit/{bookId}")]
+        public IActionResult Edit(int bookId)
+        {
+            Book editingBook = BookData.GetById(bookId);
+            ViewBag.bookToEdit = editingBook;
+            ViewBag.title = "Edit Book " + editingBook.BookTitle + "(id = " + editingBook.Id + ")";
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Books/Edit")]
+        public IActionResult SubmitEditBookForm(int bookId, string booktitle, string authorfirstname, string authorlastname, string genre, int numberofpages)
+        {
+            Book editingBook = BookData.GetById(bookId);
+            editingBook.BookTitle = booktitle;
+            editingBook.AuthorFirstName = authorfirstname;
+            editingBook.AuthorLastName = authorlastname;
+            editingBook.Genre = genre;
+            editingBook.NumberOfPages = numberofpages;
+            return Redirect("/Books");
+        }
     }
 }
