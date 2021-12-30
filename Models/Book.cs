@@ -10,13 +10,10 @@ namespace BookCollection.Models
         public string AuthorLastName { get; set; }
         public string Genre { get; set; }
         public int NumberOfPages { get; set; }
-        public int Id { get; }
-        private static int nextId = 1;
+        public int Id { get; set; }
 
         public Book()
         {
-            Id = nextId;
-            nextId++;
         }
 
         public Book(string booktitle, string authorfirstname, string authorlastname, string genre, int numberofpages)
