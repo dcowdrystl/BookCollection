@@ -33,6 +33,10 @@ namespace BookCollection.Controllers
         [HttpPost]
         public IActionResult Add(AddBookViewModel addBookViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Add", addBookViewModel);
+            }
             Book newBook = new Book
             {
                 BookTitle = addBookViewModel.BookTitle,
