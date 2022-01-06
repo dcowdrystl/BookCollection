@@ -7,6 +7,7 @@
     <div asp-controller="Books" asp-action="Add" class="form-group">
         <label asp-for="BookTitle">Book Title</label>
         <input asp-for="BookTitle" />
+        <span asp-validation-for="BookTitle"></span>
     </div>
     <div class="form-group">
         <label asp-for="AuthorFirstName">Author's' First Name</label>
@@ -15,6 +16,7 @@
     <div class="form-group">
         <label asp-for="AuthorLastName">Author's' Last Name</label>
         <input asp-for="AuthorLastName" />
+        <span asp-validation-for="AuthorLastName"></span>
     </div>
     <div class="form-group">
         <label asp-for="NumberOfPages">Number of Pages</label>
