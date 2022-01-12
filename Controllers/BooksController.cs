@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookCollection.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private BookDbContext context;
