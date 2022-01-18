@@ -18,6 +18,7 @@ namespace BookCollection.Controllers
         {
             context = dbContext;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             /*List<Book> books = new List<Book>(BookData.GetAll());*/
