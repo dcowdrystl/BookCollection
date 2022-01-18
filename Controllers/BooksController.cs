@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookCollection.Controllers
 {
@@ -13,47 +16,70 @@ namespace BookCollection.Controllers
     public class BooksController : Controller
     {
         private BookDbContext context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public BooksController(BookDbContext dbContext)
+        public BooksController(BookDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             context = dbContext;
+            _userManager = userManager;
         }
-        [AllowAnonymous]
-        public IActionResult Index()
-        {
-            /*List<Book> books = new List<Book>(BookData.GetAll());*/
-            List<Book> books = context.Books.ToList();
 
-            return View(books);
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            if (!ModelState.IsValid) { return View(); }
+            /*List<Book> books = new List<Book>(BookData.GetAll());*/
+
+            var currentUser = await GetCurrentUserAsync();
+            var bookDbContext = context.Books
+                .Where(b => b.ApplicationUserId == currentUser.Id);
+
+            return View(await bookDbContext.ToListAsync());
         }
 
         public IActionResult Add()
         {
+            //var currentUser = await GetCurrentUserAsync();
+
             AddBookViewModel addBookViewModel = new AddBookViewModel();
             return View(addBookViewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(AddBookViewModel addBookViewModel)
+        public async Task<IActionResult> Add(AddBookViewModel addBookViewModel)
         {
+            var currentUser = await GetCurrentUserAsync();
             if (!ModelState.IsValid)
             {
+
                 return View("Add", addBookViewModel);
+
             }
-            Book newBook = new Book
+            else if (ModelState.IsValid)
             {
-                BookTitle = addBookViewModel.BookTitle,
-                AuthorFirstName = addBookViewModel.AuthorFirstName,
-                AuthorLastName = addBookViewModel.AuthorLastName,
-                Genre = addBookViewModel.Genre,
-                NumberOfPages = addBookViewModel.NumberOfPages,
-            };
 
-            /*BookData.Add(newBook);*/
-            context.Books.Add(newBook);
-            context.SaveChanges();
 
-            return Redirect("/Books");
+                Book newBook = new Book
+                {
+                    BookTitle = addBookViewModel.BookTitle,
+                    AuthorFirstName = addBookViewModel.AuthorFirstName,
+                    AuthorLastName = addBookViewModel.AuthorLastName,
+                    Genre = addBookViewModel.Genre,
+                    NumberOfPages = addBookViewModel.NumberOfPages,
+                    ApplicationUserId = currentUser.Id
+                };
+
+                /*NOT MINE BookData.Add(newBook);*/
+                context.Books.Add(newBook);
+                await context.SaveChangesAsync();
+
+                //return Redirect("/Books");
+                return RedirectToAction(nameof(Index));
+            }
+            return View(addBookViewModel);
         }
 
         public IActionResult Delete()

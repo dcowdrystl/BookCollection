@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookCollection.Models
 {
@@ -11,6 +14,12 @@ namespace BookCollection.Models
         public string Genre { get; set; }
         public int NumberOfPages { get; set; }
         public int Id { get; set; }
+
+        //[ForeignKey("ApplicationUserId")]
+        public ApplicationUser User { get; set; }
+
+        //[Key]
+        public string ApplicationUserId { get; set; }
 
         public Book()
         {

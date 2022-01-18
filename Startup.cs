@@ -1,4 +1,5 @@
 using BookCollection.Data;
+using BookCollection.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,14 @@ namespace BookCollection
         //adding comment
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //services.AddDbContext<BookDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<BookDbContext>();
+
+            //above this line is new //
             services.AddControllersWithViews();
             /*services.AddDbContext<BookDbContext>(options =>
       options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));*/
