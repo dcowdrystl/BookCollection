@@ -27,7 +27,7 @@ namespace BookCollection.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             if (!ModelState.IsValid) { return View(); }
