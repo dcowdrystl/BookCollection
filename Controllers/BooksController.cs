@@ -130,13 +130,6 @@ namespace BookCollection.Controllers
             context.SaveChanges();
             return Redirect("/Books");
         }
-        /*[AllowAnonymous]
-        public IActionResult ViewAll()
-        {
-            *//*List<Book> books = new List<Book>(BookData.GetAll());*//*
-            List<Book> books = context.Books.ToList();
-
-            return View(books);
-        }*/
+      
     }
 }
