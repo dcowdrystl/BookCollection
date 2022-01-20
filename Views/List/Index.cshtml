@@ -3,6 +3,54 @@
 @model List<Book>
 
 <h1>List Books</h1>
+<div class="container body-content">
+
+    @*<h1>Title</h1>*@
+
+    <form action="/list/index" method="post">
+        @*<h2>Search</h2>*@
+
+      @*  <p>
+            @foreach (var column in ViewBag.columns)
+            {
+                <span>
+                    <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked="@column.Key == 'all'" />
+                    <label for="@column.Key">@column.Value</label>
+                </span>
+            }
+
+        </p>*@
+
+        <p>
+            <label for="searchTerm"></label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+             <input type="submit" value="Search" />
+        </p>
+
+       
+    </form>
+
+    <hr />
+
+    @*@if (ViewBag.jobs != null)
+    {
+        <table>
+            @foreach (var job in ViewBag.jobs)
+            {
+                <tr>
+                    <td>
+                        <p>ID: @job.JobId</p>
+                        <p>Name: @job.Name</p>
+                        <p>Employer: @job.EmployerName</p>
+                        <p>Location: @job.SkillText</p>
+                    </td>
+                </tr>
+            }
+        </table>
+    }*@
+
+
+</div>
 
 @if (Model.Count == 0)
 {
