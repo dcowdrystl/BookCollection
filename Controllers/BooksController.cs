@@ -73,6 +73,8 @@ namespace BookCollection.Controllers
                 };
 
                 //context.SaveChanges();
+                context.Books.Add(newBook);
+                await context.SaveChangesAsync();
 
                 var bookId = newBook.Id;
                 var rUserId = currentUser.Id;
@@ -86,8 +88,8 @@ namespace BookCollection.Controllers
                 /*NOT MINE BookData.Add(newBook);*/
                 context.BookUsers.Add(newBookUser);
                 await context.SaveChangesAsync();
-                context.Books.Add(newBook);
-                await context.SaveChangesAsync();
+                //context.Books.Add(newBook);
+                //await context.SaveChangesAsync();
 
                 //return Redirect("/Books");
                 return RedirectToAction(nameof(Index));
