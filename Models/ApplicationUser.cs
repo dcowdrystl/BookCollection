@@ -7,6 +7,10 @@ namespace BookCollection.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        //public int BookId { get; set; }
+        
+        //public Book UserBook { get; set; }
+
         //[Required]
         //[Display(Name = "First Name")]
         //public string FirstName { get; set; }

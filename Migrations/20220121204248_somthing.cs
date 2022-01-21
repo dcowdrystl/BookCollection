@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookCollection.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class somthing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,6 +177,31 @@ namespace BookCollection.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookUsers",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookUsers", x => new { x.BookId, x.ApplicationUserId });
+                    table.ForeignKey(
+                        name: "FK_BookUsers_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookUsers_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -218,6 +243,11 @@ namespace BookCollection.Migrations
                 name: "IX_Books_ApplicationUserId",
                 table: "Books",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookUsers_ApplicationUserId",
+                table: "BookUsers",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -238,10 +268,13 @@ namespace BookCollection.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "BookUsers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

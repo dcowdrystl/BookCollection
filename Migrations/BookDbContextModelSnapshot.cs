@@ -112,6 +112,24 @@ namespace BookCollection.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("BookCollection.Models.BookUser", b =>
+                {
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId", "ApplicationUserId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("BookUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -249,6 +267,21 @@ namespace BookCollection.Migrations
                     b.HasOne("BookCollection.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("BookCollection.Models.BookUser", b =>
+                {
+                    b.HasOne("BookCollection.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookCollection.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

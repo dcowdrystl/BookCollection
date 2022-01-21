@@ -61,7 +61,7 @@ namespace BookCollection.Controllers
             else if (ModelState.IsValid)
             {
 
-
+                
                 Book newBook = new Book
                 {
                     BookTitle = addBookViewModel.BookTitle,
@@ -72,7 +72,20 @@ namespace BookCollection.Controllers
                     ApplicationUserId = currentUser.Id
                 };
 
+                //context.SaveChanges();
+
+                var bookId = newBook.Id;
+                var rUserId = currentUser.Id;
+
+                BookUser newBookUser = new BookUser
+                {
+                    BookId = bookId,
+                    ApplicationUserId = rUserId
+                };
+
                 /*NOT MINE BookData.Add(newBook);*/
+                context.BookUsers.Add(newBookUser);
+                await context.SaveChangesAsync();
                 context.Books.Add(newBook);
                 await context.SaveChangesAsync();
 
