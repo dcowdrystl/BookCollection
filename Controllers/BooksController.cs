@@ -75,7 +75,21 @@ namespace BookCollection.Controllers
 
                 if (context.Books.ToList().Any(b => b.BookTitle == newBook.BookTitle))
                 {
+                    
+                    var bookId = context.Books
+                        .Where(b => b.BookTitle == newBook.BookTitle)
+                        .Select(b => b.Id);
+                    var rUserId = currentUser.Id;
+                    newBook.Id = (from b in context.Books select b.Id).First();
+                    
+                    BookUser newBookUser = new BookUser
+                    {
+                        BookId = newBook.Id,
+                        ApplicationUserId = rUserId
+                    };
 
+                    context.BookUsers.Add(newBookUser);
+                    await context.SaveChangesAsync();
                 }
                 else
                 {
