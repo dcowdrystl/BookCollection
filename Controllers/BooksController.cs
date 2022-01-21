@@ -72,26 +72,34 @@ namespace BookCollection.Controllers
                     ApplicationUserId = currentUser.Id
                 };
 
-                //context.SaveChanges();
-                context.Books.Add(newBook);
-                await context.SaveChangesAsync();
 
-                var bookId = newBook.Id;
-                var rUserId = currentUser.Id;
-
-                BookUser newBookUser = new BookUser
+                if (context.Books.ToList().Any(b => b.BookTitle == newBook.BookTitle))
                 {
-                    BookId = bookId,
-                    ApplicationUserId = rUserId
-                };
 
-                /*NOT MINE BookData.Add(newBook);*/
-                context.BookUsers.Add(newBookUser);
-                await context.SaveChangesAsync();
-                //context.Books.Add(newBook);
-                //await context.SaveChangesAsync();
+                }
+                else
+                {
+                    context.Books.Add(newBook);
+                    await context.SaveChangesAsync();
 
-                //return Redirect("/Books");
+                    var bookId = newBook.Id;
+                    var rUserId = currentUser.Id;
+
+                    BookUser newBookUser = new BookUser
+                    {
+                        BookId = bookId,
+                        ApplicationUserId = rUserId
+                    };
+
+                    /*NOT MINE BookData.Add(newBook);*/
+                    context.BookUsers.Add(newBookUser);
+                    await context.SaveChangesAsync();
+                    //context.Books.Add(newBook);
+                    //await context.SaveChangesAsync();
+
+                    //return Redirect("/Books");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(addBookViewModel);
