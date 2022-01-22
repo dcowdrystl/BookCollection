@@ -152,26 +152,50 @@ namespace BookCollection.Controllers
             }
             return View(addBookViewModel);
         }
+        //[HttpGet]
+        //public IActionResult Delete()
+        //{
+        //    /*ViewBag.books = BookData.GetAll();*/
+        //    ViewBag.books = context.Books.ToList();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-        public IActionResult Delete()
+        [HttpGet]
+        public async Task<IActionResult> Delete(int bookId)
         {
-            /*ViewBag.books = BookData.GetAll();*/
-            ViewBag.books = context.Books.ToList();
-            return View();
-        }
+            var currentUser = await GetCurrentUserAsync();
 
-        [HttpPost]
-        public IActionResult Delete(int[] bookIds)
-        {
-            foreach (int bookId in bookIds)
+            //foreach (int bookId in bookIds)
+            //{
+            //    /*BookData.Remove(bookId);*/
+            //    Book theBook = context.Books.Find(bookId);
+            //    context.Books.Remove(theBook);
+            //}
+
+            BookUser extantUser = (from bu in context.BookUsers
+                                   where bu.BookId == bookId && bu.ApplicationUserId == currentUser.Id
+                                   select bu).FirstOrDefault();
+
+            if (extantUser != null)
             {
-                /*BookData.Remove(bookId);*/
-                Book theBook = context.Books.Find(bookId);
-                context.Books.Remove(theBook);
-            }
+                context.BookUsers.Remove(extantUser);
+                context.SaveChanges();
 
+                extantUser = (from bu in context.BookUsers
+                              where bu.BookId == bookId
+                              select bu).FirstOrDefault();
+
+                if (extantUser == null)
+                {
+                    Book extantBook = context.Books.Find(bookId);
+                    context.Books.Remove(extantBook);
+                    context.SaveChanges();
+                }
+
+            }
+            
             context.SaveChanges();
-            return Redirect("/Books");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
