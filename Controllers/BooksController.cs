@@ -95,27 +95,35 @@ namespace BookCollection.Controllers
                     //ApplicationUserId = currentUser.Id
                 };
 
+                Book extantBook = (from b in context.Books where b.BookTitle == newBook.BookTitle select b).FirstOrDefault();
 
-                if (context.Books.ToList().Any(b => b.BookTitle == newBook.BookTitle))
+                if (extantBook != null)
                 {
-                    
-                    
-                    //var bookId = context.Books
-                    //    .Where(b => b.BookTitle == newBook.BookTitle)
-                    //    .Select(b => b.Id);
-                    var rUserId = currentUser.Id;
-                    newBook.Id = (from b in context.Books
-                                  where b.BookTitle == newBook.BookTitle
-                                  select b.Id).First();
-                    
-                    BookUser newBookUser = new BookUser
-                    {
-                        BookId = newBook.Id,
-                        ApplicationUserId = rUserId
-                    };
 
-                    context.BookUsers.Add(newBookUser);
-                    await context.SaveChangesAsync();
+                    if (context.BookUsers.ToList().Count(bu => bu.BookId == extantBook.Id
+                    && bu.ApplicationUserId == currentUser.Id) == 0)
+
+                    {
+
+
+                        //var bookId = context.Books
+                        //    .Where(b => b.BookTitle == newBook.BookTitle)
+                        //    .Select(b => b.Id);
+
+                        var rUserId = currentUser.Id;
+                        //newBook.Id = (from b in context.Books
+                        //              where b.BookTitle == newBook.BookTitle
+                        //              select b.Id).First();
+
+                        BookUser newBookUser = new BookUser
+                        {
+                            BookId = extantBook.Id,
+                            ApplicationUserId = rUserId
+                        };
+
+                        context.BookUsers.Add(newBookUser);
+                        await context.SaveChangesAsync();
+                    }
                 }
                 else
                 {
