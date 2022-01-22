@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,8 @@ namespace BookCollection.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+        public IList<BookUser> BookUsers { get; set; }
         //public int BookId { get; set; }
         
         //public Book UserBook { get; set; }

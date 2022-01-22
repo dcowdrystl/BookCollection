@@ -21,6 +21,8 @@ namespace BookCollection.Models
         //[Key]
         public string ApplicationUserId { get; set; }
 
+        public IList<BookUser> BookUsers { get; set; }
+
         public Book()
         {
         }

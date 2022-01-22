@@ -34,10 +34,23 @@ namespace BookCollection.Controllers
             /*List<Book> books = new List<Book>(BookData.GetAll());*/
 
             var currentUser = await GetCurrentUserAsync();
-            var bookDbContext = context.Books
-                .Where(b => b.ApplicationUserId == currentUser.Id);
+            
 
-            return View(await bookDbContext.ToListAsync());
+            
+
+
+            List<Book> omg = await context.Books
+                .Where(b => b.Id == context.BookUsers.First().BookId && currentUser.Id == context.BookUsers.First().ApplicationUserId
+
+                ).ToListAsync()
+                ;
+            List<Book> somelist = await context.Books
+                .Where(b => b.Id == b.BookUsers.FirstOrDefault().BookId && currentUser.Id == b.BookUsers.FirstOrDefault().ApplicationUserId).ToListAsync();
+
+            //List<Book> bookList = context.Books
+            //    .Where(b => b.Id == b.BookUsers.BookId.ToList());
+
+            return View(somelist);
         }
 
         public IActionResult Add()
@@ -75,6 +88,7 @@ namespace BookCollection.Controllers
 
                 if (context.Books.ToList().Any(b => b.BookTitle == newBook.BookTitle))
                 {
+                    
                     
                     var bookId = context.Books
                         .Where(b => b.BookTitle == newBook.BookTitle)
