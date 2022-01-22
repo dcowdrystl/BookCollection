@@ -32,25 +32,35 @@ namespace BookCollection.Controllers
         {
             if (!ModelState.IsValid) { return View(); }
             /*List<Book> books = new List<Book>(BookData.GetAll());*/
+            if (ModelState.IsValid)
+            {
+                var currentUser = await GetCurrentUserAsync();
 
-            var currentUser = await GetCurrentUserAsync();
-            
+                // This ONE line of code below took about 9 hours to create...
+                //List<Book> userList = await context.Books
+                //    .Where(b => b.Id == b.BookUsers.First().BookId
+                //    && currentUser.Id == b.BookUsers.First().ApplicationUserId).ToListAsync();
 
-            
+                List<Book> omg = (from b in context.Books
+                                  join bu in context.BookUsers on b.Id equals bu.BookId
+                                  join a in context.ApplicationUsers on bu.ApplicationUserId equals a.Id
+                                  where a.Id == currentUser.Id
+                                  select new Book
+                                  {
+                                      Id = b.Id,
+                                      BookTitle = b.BookTitle,
+                                      AuthorFirstName = b.AuthorFirstName,
+                                      AuthorLastName = b.AuthorLastName,
+                                      Genre = b.Genre,
+                                      NumberOfPages = b.NumberOfPages,
+                                  }).ToList<Book>();
 
 
-            List<Book> omg = await context.Books
-                .Where(b => b.Id == context.BookUsers.First().BookId && currentUser.Id == context.BookUsers.First().ApplicationUserId
 
-                ).ToListAsync()
-                ;
-            List<Book> somelist = await context.Books
-                .Where(b => b.Id == b.BookUsers.FirstOrDefault().BookId && currentUser.Id == b.BookUsers.FirstOrDefault().ApplicationUserId).ToListAsync();
+                return View(omg);
+            }
 
-            //List<Book> bookList = context.Books
-            //    .Where(b => b.Id == b.BookUsers.BookId.ToList());
-
-            return View(somelist);
+            return View();
         }
 
         public IActionResult Add()
@@ -82,7 +92,7 @@ namespace BookCollection.Controllers
                     AuthorLastName = addBookViewModel.AuthorLastName,
                     Genre = addBookViewModel.Genre,
                     NumberOfPages = addBookViewModel.NumberOfPages,
-                    ApplicationUserId = currentUser.Id
+                    //ApplicationUserId = currentUser.Id
                 };
 
 
@@ -90,11 +100,13 @@ namespace BookCollection.Controllers
                 {
                     
                     
-                    var bookId = context.Books
-                        .Where(b => b.BookTitle == newBook.BookTitle)
-                        .Select(b => b.Id);
+                    //var bookId = context.Books
+                    //    .Where(b => b.BookTitle == newBook.BookTitle)
+                    //    .Select(b => b.Id);
                     var rUserId = currentUser.Id;
-                    newBook.Id = (from b in context.Books select b.Id).First();
+                    newBook.Id = (from b in context.Books
+                                  where b.BookTitle == newBook.BookTitle
+                                  select b.Id).First();
                     
                     BookUser newBookUser = new BookUser
                     {
