@@ -10,6 +10,14 @@ namespace BookCollection.Models
     {
 
         public IList<BookUser> BookUsers { get; set; }
+
+        [PersonalData]
+        [Column(TypeName ="nvarchar(100)")]
+        public string FirstName { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string LastName { get; set; }    
         //public int BookId { get; set; }
         
         //public Book UserBook { get; set; }

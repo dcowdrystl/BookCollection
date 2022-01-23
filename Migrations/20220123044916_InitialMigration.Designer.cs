@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookCollection.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20220121220716_InitialMigration")]
+    [Migration("20220123044916_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,12 @@ namespace BookCollection.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -271,13 +277,13 @@ namespace BookCollection.Migrations
             modelBuilder.Entity("BookCollection.Models.BookUser", b =>
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("BookUsers")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BookCollection.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("BookUsers")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

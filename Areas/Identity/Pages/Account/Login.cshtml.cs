@@ -57,6 +57,11 @@ namespace BookCollection.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //If user is logged in, prevent access to login page.
+            if(User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
