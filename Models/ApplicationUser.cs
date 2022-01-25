@@ -17,7 +17,9 @@ namespace BookCollection.Models
 
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string LastName { get; set; }    
+        public string LastName { get; set; }  
+        
+        /*public List<ApplicationUser> Friends { get; set; } = new List<ApplicationUser>();*/
         //public int BookId { get; set; }
         
         //public Book UserBook { get; set; }
