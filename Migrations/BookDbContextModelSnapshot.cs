@@ -165,7 +165,7 @@ namespace BookCollection.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserProfile");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

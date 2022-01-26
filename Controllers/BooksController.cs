@@ -225,6 +225,16 @@ namespace BookCollection.Controllers
             context.SaveChanges();
             return Redirect("/Books");
         }
-      
+
+        public IActionResult TheirBooks(string userName)
+        {
+            var findUserBooks = context.BookUsers
+             .Where(bu => bu.ApplicationUserId == userName)
+             /*.Include(p => p.BookId)*/
+             .ToList();
+            ViewBag.User = userName.Remove(userName.IndexOf("@"));
+            return View(findUserBooks);
+        }
+
     }
 }

@@ -50,7 +50,7 @@ namespace BookCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserProfile",
+                name: "Profiles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -59,7 +59,7 @@ namespace BookCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProfile", x => x.Id);
+                    table.PrimaryKey("PK_Profiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,15 +205,15 @@ namespace BookCollection.Migrations
                 {
                     table.PrimaryKey("PK_Friends", x => x.RelationId);
                     table.ForeignKey(
-                        name: "FK_Friends_UserProfile_FriendId",
+                        name: "FK_Friends_Profiles_FriendId",
                         column: x => x.FriendId,
-                        principalTable: "UserProfile",
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Friends_UserProfile_UserId",
+                        name: "FK_Friends_Profiles_UserId",
                         column: x => x.UserId,
-                        principalTable: "UserProfile",
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -330,7 +330,7 @@ namespace BookCollection.Migrations
                 name: "Books");
 
             migrationBuilder.DropTable(
-                name: "UserProfile");
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookCollection.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20220126014808_InitialMigration")]
+    [Migration("20220126153006_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,7 +167,7 @@ namespace BookCollection.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserProfile");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
