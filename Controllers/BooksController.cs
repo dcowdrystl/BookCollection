@@ -31,15 +31,13 @@ namespace BookCollection.Controllers
         public async Task<IActionResult> Index()
         {
             if (!ModelState.IsValid) { return View(); }
-            /*List<Book> books = new List<Book>(BookData.GetAll());*/
+            
             if (ModelState.IsValid)
             {
                 var currentUser = await GetCurrentUserAsync();
 
                 // This ONE line of code below took about 9 hours to create...
-                //List<Book> userList = await context.Books
-                //    .Where(b => b.Id == b.BookUsers.First().BookId
-                //    && currentUser.Id == b.BookUsers.First().ApplicationUserId).ToListAsync();
+              
 
                 List<Book> omg = (from b in context.Books
                                   join bu in context.BookUsers on b.Id equals bu.BookId
@@ -65,7 +63,7 @@ namespace BookCollection.Controllers
 
         public IActionResult Add()
         {
-            //var currentUser = await GetCurrentUserAsync();
+            
 
             AddBookViewModel addBookViewModel = new AddBookViewModel();
             return View(addBookViewModel);
@@ -92,7 +90,7 @@ namespace BookCollection.Controllers
                     AuthorLastName = addBookViewModel.AuthorLastName,
                     Genre = addBookViewModel.Genre,
                     NumberOfPages = addBookViewModel.NumberOfPages,
-                    //ApplicationUserId = currentUser.Id
+                    
                 };
 
                 Book extantBook = (from b in context.Books where b.BookTitle == newBook.BookTitle select b).FirstOrDefault();
@@ -106,14 +104,10 @@ namespace BookCollection.Controllers
                     {
 
 
-                        //var bookId = context.Books
-                        //    .Where(b => b.BookTitle == newBook.BookTitle)
-                        //    .Select(b => b.Id);
+                        
 
                         var rUserId = currentUser.Id;
-                        //newBook.Id = (from b in context.Books
-                        //              where b.BookTitle == newBook.BookTitle
-                        //              select b.Id).First();
+                      
 
                         BookUser newBookUser = new BookUser
                         {
@@ -139,13 +133,10 @@ namespace BookCollection.Controllers
                         ApplicationUserId = rUserId
                     };
 
-                    /*NOT MINE BookData.Add(newBook);*/
+                    
                     context.BookUsers.Add(newBookUser);
                     await context.SaveChangesAsync();
-                    //context.Books.Add(newBook);
-                    //await context.SaveChangesAsync();
-
-                    //return Redirect("/Books");
+                 
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -165,12 +156,6 @@ namespace BookCollection.Controllers
         {
             var currentUser = await GetCurrentUserAsync();
 
-            //foreach (int bookId in bookIds)
-            //{
-            //    /*BookData.Remove(bookId);*/
-            //    Book theBook = context.Books.Find(bookId);
-            //    context.Books.Remove(theBook);
-            //}
 
             BookUser extantUser = (from bu in context.BookUsers
                                    where bu.BookId == bookId && bu.ApplicationUserId == currentUser.Id
@@ -202,7 +187,7 @@ namespace BookCollection.Controllers
         [Route("Books/Edit/{bookId}")]
         public IActionResult Edit(int bookId)
         {
-            /*Book editingBook = BookData.GetById(bookId);*/
+            
             Book editingBook = context.Books.Find(bookId);
 
             ViewBag.bookToEdit = editingBook;
@@ -214,7 +199,7 @@ namespace BookCollection.Controllers
         [Route("Books/Edit")]
         public IActionResult SubmitEditBookForm(int bookId, string booktitle, string authorfirstname, string authorlastname, string genre, int numberofpages)
         {
-            /*Book editingBook = BookData.GetById(bookId);*/
+            
             Book editingBook = context.Books.Find(bookId);
             editingBook.BookTitle = booktitle;
             editingBook.AuthorFirstName = authorfirstname;
