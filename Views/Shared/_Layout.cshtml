@@ -30,7 +30,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="List" asp-action="Index">View All</a>
                         </li>
+
                     </ul>
+                    <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Friends
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-controller="FriendsList" asp-action="MyFriends">My Friends</a>
+                                    <a class="dropdown-item" asp-controller="FriendsList" asp-action="Index">Add Friends</a>
+                                </div>
+                            </div>
                 </div>
             </div>
         </nav>

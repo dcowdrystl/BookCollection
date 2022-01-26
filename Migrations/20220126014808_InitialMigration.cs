@@ -50,6 +50,19 @@ namespace BookCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserProfile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfile", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -180,6 +193,32 @@ namespace BookCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Friends",
+                columns: table => new
+                {
+                    RelationId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    FriendId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Friends", x => x.RelationId);
+                    table.ForeignKey(
+                        name: "FK_Friends_UserProfile_FriendId",
+                        column: x => x.FriendId,
+                        principalTable: "UserProfile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Friends_UserProfile_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserProfile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookUsers",
                 columns: table => new
                 {
@@ -249,6 +288,16 @@ namespace BookCollection.Migrations
                 name: "IX_BookUsers_ApplicationUserId",
                 table: "BookUsers",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friends_FriendId",
+                table: "Friends",
+                column: "FriendId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friends_UserId",
+                table: "Friends",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -272,10 +321,16 @@ namespace BookCollection.Migrations
                 name: "BookUsers");
 
             migrationBuilder.DropTable(
+                name: "Friends");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "UserProfile");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
