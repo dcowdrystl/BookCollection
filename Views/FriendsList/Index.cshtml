@@ -24,10 +24,10 @@ else
         <td>@user.UserName.Remove(user.UserName.IndexOf("@")) </td>
         @if(ViewBag.friendNames.Contains(user.UserName)) 
             {
-                <td><button type="button" class="btn btn-primary" disabled>Already Friends</button></td>
+                <td><button type="button" class="btn btn-secondary" disabled>Already Friends</button></td>
             } else 
             {
-                <td>@Html.ActionLink("Add Friend", "AddFriend", "FriendsList", new { id = user.Id }, new { @class = "btn btn-primary" })</td>
+                <td>@Html.ActionLink("Add Friend", "AddFriend", "FriendsList", new { id = user.Id }, new { @class = "btn btn-outline-dark" })</td>
             }
     </tr>
     }

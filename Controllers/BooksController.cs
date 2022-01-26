@@ -226,17 +226,22 @@ namespace BookCollection.Controllers
             return Redirect("/Books");
         }
 
-        public IActionResult TheirBooks(string userName)
+        public IActionResult TheirBooks(string userName, string userId)
         {
             var findUserBooks = (from b in context.Books
                                  join bu in context.BookUsers on b.Id equals bu.BookId
                                  join a in context.ApplicationUsers on bu.ApplicationUserId equals a.Id
-                                 where a.Id == userName
-                                 select new Book { Id = b.Id, BookTitle = b.BookTitle }).ToList<Book>();
-            /*.Where(bu => bu.ApplicationUserId == userName)
-            *//*.Include(p => p.BookId)*//*
-            .ToList();*/
-            ViewBag.User = userName;/*.Remove(userName.IndexOf("@"));*/
+                                 where a.Id == userId
+                                 select new Book {
+                                     Id = b.Id,
+                                     BookTitle = b.BookTitle,
+                                     AuthorFirstName = b.AuthorFirstName,
+                                     AuthorLastName = b.AuthorLastName,
+                                     Genre = b.Genre,
+                                     NumberOfPages = b.NumberOfPages
+                                 }).ToList<Book>();
+            ViewBag.User = userName
+                .Remove(userName.IndexOf("@"));
             return View(findUserBooks);
         }
 

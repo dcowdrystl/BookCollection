@@ -15,6 +15,7 @@ namespace BookCollection.Models
 
         public ApplicationUser ApplicationUser { get; set; }
         public string ApplicationUserId { get; set; }
+
         public UserProfile() { }
     }
 }

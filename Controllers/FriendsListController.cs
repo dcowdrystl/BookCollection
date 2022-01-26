@@ -46,7 +46,8 @@ namespace BookCollection.Controllers
             {
                 UserProfile profile = new UserProfile
                 {
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    ApplicationUserId = user.Id
                 };
                 _context.Profiles.Add(profile);
                 _context.SaveChanges();
@@ -69,7 +70,8 @@ namespace BookCollection.Controllers
             {
                 UserProfile friendProfile = new UserProfile
                 {
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    ApplicationUserId = user.Id,
                 };
                 _context.Profiles.Add(friendProfile);
                 _context.SaveChanges();

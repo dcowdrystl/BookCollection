@@ -17,31 +17,41 @@ else
     <div class="mx-auto px-3 py-3 pt-md-5 pb-md-4 text-center">
         <h2>@ViewBag.User's Books</h2>
     </div>
+    <table class="table">
+        <tr>
+            @*<th>
+                Id
+            </th>*@
+            <th>
+                Book Title
+            </th>
+            <th>
+                Author's First Name
+            </th>
+            <th>
+                Author's Last Name
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Number of Pages
+            </th>
+        </tr>
 
-    <div class="container">
-        <div class="card-deck mb-3 text-center" align="center">
-            <div class="row">
-                @foreach (var book in Model)
-                {
-                   @* <div class="card-deck mx-auto text-center col">
-                        <div class="card mb-4 box-shadow">
-                            <div class="card-header">
-                                <h4 class="my-0 font-weight-normal">@item.Title</h4>
-                            </div>
-                            <div class="card-body">
-                                <img src="@("~/image/" + item.ImageName)" asp-append-version="true" width="250" height="250" />
-                                <p><strong>@item.Category.Name</strong></p>
-                            </div>
-                        </div>
-                    </div>*@
-                <td>@book.Id</td>
+        @foreach (var book in Model)
+        {
+            <tr>
+                @*<td>@book.Id</td>*@
                 <td>@book.BookTitle</td>
                 <td>@book.AuthorFirstName</td>
                 <td>@book.AuthorLastName</td>
                 <td>@book.Genre</td>
                 <td>@book.NumberOfPages</td>
-                }
-            </div>
-        </div>
-    </div>
+                
+                
+            </tr>
+        }
+    </table>
+            
 }
