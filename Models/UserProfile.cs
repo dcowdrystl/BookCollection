@@ -13,6 +13,8 @@ namespace BookCollection.Models
             UserName = userName;
         }
 
+        public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; }
         public UserProfile() { }
     }
 }
