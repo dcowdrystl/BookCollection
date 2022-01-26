@@ -11,6 +11,7 @@ namespace BookCollection.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<BookUser> BookUsers { get; set; }
 
+        /*public DbSet<Friends> Friends { get; set; }*/
         public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
         { 
         }
