@@ -1,5 +1,6 @@
 ﻿using BookCollection.Data;
 using BookCollection.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace BookCollection.Controllers
 {
+    [Authorize]
     public class FriendsListController : Controller
     {
         private readonly BookDbContext _context;

@@ -22,7 +22,7 @@
             <tr>
                 <td>@friend.Friend.UserName.Remove(friend.Friend.UserName.IndexOf("@")) </td>
                 <td>@Html.ActionLink("See " +@friend.Friend.UserName.Remove(friend.Friend.UserName.IndexOf("@")) + "'s Books", "TheirBooks", "Books", new { userName = friend.Friend.UserName, userId = friend.Friend.ApplicationUserId}, new { @class = "btn btn-outline-dark" })</td>
-                <td>@Html.ActionLink("Remove Friend", "RemoveFriend", "FriendsList", new { id = friend.Friend.Id }, new { @class = "btn btn-secondary" })</td>
+                <td>@Html.ActionLink("Remove Friend", "RemoveFriend", "FriendsList", new { id = friend.Friend.Id }, new { @class = "btn btn-outline-warning" })</td>
             </tr>
         }
     </table>
