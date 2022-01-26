@@ -1,0 +1,47 @@
+﻿@model List<Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+@if (Model.Count == 0)
+{
+    <div class="mx-auto px-3 py-3 pt-md-5 pb-md-4 text-center">
+        <div>
+            <h4 style="text-align: center"> Looks like @ViewBag.User doesn't have any books, yet. &#9785;</h4>
+        </div>
+    </div>
+}
+else
+{
+    <div class="mx-auto px-3 py-3 pt-md-5 pb-md-4 text-center">
+        <h2>@ViewBag.User's Books</h2>
+    </div>
+
+    <div class="container">
+        <div class="card-deck mb-3 text-center" align="center">
+            <div class="row">
+                @foreach (var book in Model)
+                {
+                   @* <div class="card-deck mx-auto text-center col">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">@item.Title</h4>
+                            </div>
+                            <div class="card-body">
+                                <img src="@("~/image/" + item.ImageName)" asp-append-version="true" width="250" height="250" />
+                                <p><strong>@item.Category.Name</strong></p>
+                            </div>
+                        </div>
+                    </div>*@
+                <td>@book.Id</td>
+                <td>@book.BookTitle</td>
+                <td>@book.AuthorFirstName</td>
+                <td>@book.AuthorLastName</td>
+                <td>@book.Genre</td>
+                <td>@book.NumberOfPages</td>
+                }
+            </div>
+        </div>
+    </div>
+}
