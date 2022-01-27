@@ -236,9 +236,39 @@ namespace BookCollection.Controllers
                .Include(e => e.User)
                .Single(e => e.Id == id);
 
+            
+              /* var findLikedBooks = (from u in context.Profiles
+                                     join bu in context.BookUsers on u.ApplicationUserId equals bu.ApplicationUserId
+                                     join a in context.ApplicationUsers on bu.ApplicationUserId equals a.Id
+                                     where a.Id == userId
+                                     select new UserProfile
+                                     {
+                                         Id = u.Id,
+                                         UserName = u.UserName,
+                                         ApplicationUserId = u.ApplicationUserId
+
+                                     }).ToList<UserProfile>(); ;*/
+
             BookDetailViewModel viewModel = new BookDetailViewModel(theBook);
             return View(viewModel);
         }
+        /*public IActionResult LikedBooks(string userName, string userId)
+        {
+            var findLikedBooks = (from u in context.Profiles
+                                 join bu in context.BookUsers on u.ApplicationUserId equals bu.ApplicationUserId
+                                 join a in context.ApplicationUsers on bu.ApplicationUserId equals a.Id
+                                 where a.Id == userId
+                                 select new UserProfile
+                                 {
+                                     Id = u.Id,
+                                     UserName = u.UserName,
+                                     ApplicationUserId = u.ApplicationUserId
+                                
+                                 }).ToList<UserProfile>();
+            *//*ViewBag.User = userName
+                .Remove(userName.IndexOf("@"));*//*
+            return View(findLikedBooks);
+        }*/
 
     }
 }

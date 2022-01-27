@@ -1,6 +1,8 @@
 ﻿@model BookCollection.ViewModels.BookDetailViewModel
+@*@model BookCollection.Models.Book*@
+
 @*@model List<BookCollection.Models.Book>*@
-@*<h1>@Model.Name</h1>*@
+<h1>@Model.BookTitle</h1>
 
 <table class="table">
     <tr>
@@ -25,6 +27,7 @@
     </tr>
     <tr>
         <th>Also Liked By</th>
+
         <td>@Model.NumberOfPages</td>
     </tr>
 
