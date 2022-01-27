@@ -37,7 +37,7 @@ namespace BookCollection.Controllers
                 var currentUser = await GetCurrentUserAsync();
 
                 // This ONE line of code below took about 9 hours to create...
-              
+               
 
                 List<Book> omg = (from b in context.Books
                                   join bu in context.BookUsers on b.Id equals bu.BookId
@@ -54,6 +54,7 @@ namespace BookCollection.Controllers
                                   }).ToList<Book>();
 
 
+             
 
                 return View(omg);
             }
@@ -229,6 +230,40 @@ namespace BookCollection.Controllers
                 .Remove(userName.IndexOf("@"));
             return View(findUserBooks);
         }
+
+        
+        public async Task<IActionResult> AddOtherBooks(int bookId)
+        {
+            var currentUser = await GetCurrentUserAsync();
+
+
+            if (context.BookUsers.ToList().Count(bu => bu.BookId == bookId
+                    && bu.ApplicationUserId == currentUser.Id) == 0)
+
+            {
+
+
+
+
+                var rUserId = currentUser.Id;
+
+
+                BookUser newBookUser = new BookUser
+                {
+                    BookId = bookId,
+                    ApplicationUserId = rUserId
+                };
+
+                context.BookUsers.Add(newBookUser);
+                await context.SaveChangesAsync();
+                
+
+                
+            }
+            context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

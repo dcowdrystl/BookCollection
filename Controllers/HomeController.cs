@@ -1,5 +1,8 @@
-﻿using BookCollection.Models;
+﻿using BookCollection.Data;
+using BookCollection.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,8 +21,9 @@ namespace BookCollection.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult IndexAsync()
         {
+            
             return View();
         }
 

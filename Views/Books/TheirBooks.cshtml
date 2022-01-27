@@ -48,7 +48,18 @@ else
                 <td>@book.AuthorLastName</td>
                 <td>@book.Genre</td>
                 <td>@book.NumberOfPages</td>
-                
+                <td>
+                    @Html.ActionLink(
+                            "Add Book",
+                            "AddOtherBooks",
+                            new
+                                 {
+                                bookId = @book.Id
+                                 },
+                            htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" }
+                            )
+
+                </td>
                 
             </tr>
         }
