@@ -230,5 +230,15 @@ namespace BookCollection.Controllers
             return View(findUserBooks);
         }
 
+        public IActionResult Detail(int id)
+        {
+            Book theBook = context.Books
+               .Include(e => e.User)
+               .Single(e => e.Id == id);
+
+            BookDetailViewModel viewModel = new BookDetailViewModel(theBook);
+            return View(viewModel);
+        }
+
     }
 }
