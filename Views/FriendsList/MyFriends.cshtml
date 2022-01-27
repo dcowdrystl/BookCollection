@@ -6,15 +6,17 @@
 
 @if (Model.Count == 0)
 {
-    <div class="align-content-center my-auto">
-        @Html.ActionLink("Add Some Friends!", "Index", "FriendsList", null, new { @class = "btn btn-outline-info btn-lg btn-block" })
-    </div>
+
+<div class="align-content-center my-auto">
+    You have no friends. &#9785; <br />
+    @Html.ActionLink("Add Some Friends!", "Index", "FriendsList", null, new { @class = "btn btn-outline-info btn-lg btn-block" })
+</div>
 } else
 {
     <table class="table">
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Pictures</th>
+            
             <th></th>
         </tr>
         @foreach (var friend in Model)
