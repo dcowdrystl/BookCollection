@@ -28,7 +28,11 @@
     <tr>
         <th>Also Liked By</th>
 
-        <td>@Model.NumberOfPages</td>
+        @foreach (var person in @Model.UserBooks)
+        {
+            <td>@person.UserName.Remove(person.UserName.IndexOf("@"))</td>
+        }
+        
     </tr>
 
 </table>
