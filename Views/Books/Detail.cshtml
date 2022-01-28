@@ -25,16 +25,20 @@
         <th>Number of Pages</th>
         <td>@Model.NumberOfPages</td>
     </tr>
+
+
     @if (Model.UserBooks.Count != 0)
     {
-    <tr>
-        <th>Also Liked By</th>
+        <tr>
+            <th>Also Liked By :</th>
+            </tr>
+        <tr>
+            @foreach (var person in @Model.UserBooks)
+            {
+                <td>@person.UserName.Remove(person.UserName.IndexOf("@"))</td>
+            }
+        </tr>
+        
 
-        @foreach (var person in @Model.UserBooks)
-        {
-            <td>@person.UserName.Remove(person.UserName.IndexOf("@"))</td>
-        }
-
-    </tr>
     }
 </table>
