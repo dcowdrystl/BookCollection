@@ -311,16 +311,6 @@ namespace BookCollection.Controllers
 
                                   }).ToList();
 
-            //ViewBag.myName = new List<string>();
-            //foreach (var relationship in friends)
-            //{
-            //    if (User.Identity.Name == relationship.User.UserName)
-            //    {
-            //        ViewBag.friendNames.Add(relationship.Friend.UserName);
-            //    }
-            //}
-            //if (User.Identity.Name == UserName)
-
                 var self = findLikedBooks.Find(x => x.UserName == User.Identity.Name);
             findLikedBooks.Remove(self);
 
