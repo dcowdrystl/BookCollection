@@ -41,32 +41,33 @@ else
 
         @foreach (var book in Model)
         {
-            <tr>
-                @*<td>@book.Id</td>*@
-                <td>@book.BookTitle</td>
-                <td>@book.AuthorFirstName</td>
-                <td>@book.AuthorLastName</td>
-                <td>@book.Genre</td>
-                <td>@book.NumberOfPages</td>
-                @if (ViewBag.bookTitles.Contains(book.BookTitle))
-                {
-                    <td><button type="button" class="btn btn-secondary" disabled>Already Added</button></td>
-                }
-                else
-                {
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <td>
-                            @Html.ActionLink(
-                                    "Add Book",
-                                    "AddOtherBooks",
-                                    "Books",
-                                    new { bookId = @book.Id },
-                                    htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
-                        </td>
-                    }
-                }
-            </tr>
+    <tr>
+        @*<td>@book.Id</td>*@
+        @*<td>@book.BookTitle</td>*@
+        <td><a asp-controller="Books" asp-action="Detail" asp-route-id="@book.Id">@book.BookTitle</a></td>
+        <td>@book.AuthorFirstName</td>
+        <td>@book.AuthorLastName</td>
+        <td>@book.Genre</td>
+        <td>@book.NumberOfPages</td>
+        @if (ViewBag.bookTitles.Contains(book.BookTitle))
+        {
+            <td><button type="button" class="btn btn-secondary" disabled>Already Added</button></td>
+        }
+        else
+        {
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    @Html.ActionLink(
+                            "Add Book",
+                            "AddOtherBooks",
+                            "Books",
+                            new { bookId = @book.Id },
+                            htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
+                </td>
+            }
+        }
+    </tr>
         }
     </table>
 
