@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookCollection.Controllers
 {
@@ -230,7 +231,8 @@ namespace BookCollection.Controllers
                                  }).ToList<Book>();
             ViewBag.User = userName
                 .Remove(userName.IndexOf("@"));
-
+            ViewBag.Uname = userName;
+            ViewBag.Uid = userId;
             if (User.Identity.IsAuthenticated)
             {
                 var currentUser = await GetCurrentUserAsync();
@@ -260,7 +262,7 @@ namespace BookCollection.Controllers
         }
 
         
-        public async Task<IActionResult> AddOtherBooks(int bookId)
+        public async Task<IActionResult> AddOtherBooks(int bookId, string url)
         {
             var currentUser = await GetCurrentUserAsync();
 
@@ -284,12 +286,13 @@ namespace BookCollection.Controllers
 
                 context.BookUsers.Add(newBookUser);
                 await context.SaveChangesAsync();
-                
+                return Redirect(url);
 
-                
+
             }
             context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return Redirect(url);
+            //return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Detail(int id)
