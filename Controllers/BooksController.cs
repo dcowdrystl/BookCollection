@@ -94,7 +94,7 @@ namespace BookCollection.Controllers
                     
                 };
 
-                Book extantBook = (from b in context.Books where b.BookTitle == newBook.BookTitle select b).FirstOrDefault();
+                Book extantBook = (from b in context.Books where b.BookTitle.Contains(newBook.BookTitle) select b).FirstOrDefault();
 
                 if (extantBook != null)
                 {
