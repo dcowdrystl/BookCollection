@@ -20,8 +20,8 @@ else
     <table class="table">
         <tr>
             @*<th>
-                Id
-            </th>*@
+                    Id
+                </th>*@
             <th>
                 Book Title
             </th>
@@ -48,21 +48,26 @@ else
                 <td>@book.AuthorLastName</td>
                 <td>@book.Genre</td>
                 <td>@book.NumberOfPages</td>
-                <td>
-                    @Html.ActionLink(
-                            "Add Book",
-                            "AddOtherBooks",
-                            new
-                                 {
-                                bookId = @book.Id
-                                 },
-                            htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" }
-                            )
-
-                </td>
-                
+                @if (ViewBag.bookTitles.Contains(book.BookTitle))
+                {
+                    <td><button type="button" class="btn btn-secondary" disabled>Already Added</button></td>
+                }
+                else
+                {
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @Html.ActionLink(
+                                    "Add Book",
+                                    "AddOtherBooks",
+                                    "Books",
+                                    new { bookId = @book.Id },
+                                    htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
+                        </td>
+                    }
+                }
             </tr>
         }
     </table>
-            
+
 }

@@ -212,8 +212,10 @@ namespace BookCollection.Controllers
             return Redirect("/Books");
         }
 
-        public IActionResult TheirBooks(string userName, string userId)
+        public async Task<IActionResult> TheirBooksAsync(string userName, string userId)
         {
+            ViewBag.bookTitles = new List<string>();
+
             var findUserBooks = (from b in context.Books
                                  join bu in context.BookUsers on b.Id equals bu.BookId
                                  join a in context.ApplicationUsers on bu.ApplicationUserId equals a.Id
@@ -228,6 +230,32 @@ namespace BookCollection.Controllers
                                  }).ToList<Book>();
             ViewBag.User = userName
                 .Remove(userName.IndexOf("@"));
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await GetCurrentUserAsync();
+
+                var titles = (from b in context.Books
+                              join bu in context.BookUsers on b.Id equals bu.BookId
+                              join au in context.ApplicationUsers on bu.ApplicationUserId equals au.Id
+                              where au.Id == currentUser.Id
+                              select new Book
+                              {
+                                  Id = b.Id,
+                                  BookTitle = b.BookTitle,
+                                  AuthorFirstName = b.AuthorFirstName,
+                                  AuthorLastName = b.AuthorLastName,
+                                  Genre = b.Genre,
+                                  NumberOfPages = b.NumberOfPages,
+                                  ApplicationUserId = ""
+                              }).ToList();
+
+                foreach (var book in titles)
+                {
+
+                    ViewBag.bookTitles.Add(book.BookTitle);
+                }
+            }
             return View(findUserBooks);
         }
 

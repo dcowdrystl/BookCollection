@@ -5,21 +5,10 @@
 <h1>List Books</h1>
 <div class="container body-content">
 
-    @*<h1>Title</h1>*@
+  
 
     <form action="/list/index" method="post">
-        @*<h2>Search</h2>*@
-
-      @*  <p>
-            @foreach (var column in ViewBag.columns)
-            {
-                <span>
-                    <input type="radio" name="searchType" id="@column.Key" value="@column.Key" checked="@column.Key == 'all'" />
-                    <label for="@column.Key">@column.Value</label>
-                </span>
-            }
-
-        </p>*@
+    
 
         <p>
             <label for="searchTerm"></label>
@@ -31,24 +20,6 @@
     </form>
 
     <hr />
-
-    @*@if (ViewBag.jobs != null)
-    {
-        <table>
-            @foreach (var job in ViewBag.jobs)
-            {
-                <tr>
-                    <td>
-                        <p>ID: @job.JobId</p>
-                        <p>Name: @job.Name</p>
-                        <p>Employer: @job.EmployerName</p>
-                        <p>Location: @job.SkillText</p>
-                    </td>
-                </tr>
-            }
-        </table>
-    }*@
-
 
 </div>
 
@@ -91,12 +62,12 @@ else
             <td>@book.AuthorLastName</td>
             <td>@book.Genre</td>
             <td>@book.NumberOfPages</td>     
-                @*@if (ViewBag.titles.Contains(book.Id))
+                @if (ViewBag.bookTitles.Contains(book.BookTitle))
                 {
                     <td><button type="button" class="btn btn-secondary" disabled>Already Added</button></td>
                 }
                 else
-                {*@
+                {
             @if (User.Identity.IsAuthenticated) { 
             <td>
                 @Html.ActionLink(
@@ -107,7 +78,7 @@ else
                         htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
             </td>
             }
-                @*}*@
+                }
          </tr>
             
 

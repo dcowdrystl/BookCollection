@@ -27,51 +27,44 @@ namespace BookCollection.Controllers
         }*/
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public IActionResult Index(string searchTerm)
+        public async Task<IActionResult> IndexAsync(string searchTerm)
         {
             List<Book> books = context.Books.ToList();
-            if (string.IsNullOrEmpty(searchTerm))
+            ViewBag.bookTitles = new List<string>();
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                return View(books);
-            }
-            else
-            {
+            
                 books = context.Books
                         .Where(j => j.BookTitle.Contains(searchTerm) || j.AuthorFirstName.Contains(searchTerm)
                         || j.AuthorLastName.Contains(searchTerm) || j.Genre.Contains(searchTerm))
                         .ToList();
             }
 
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    var currentUser = await GetCurrentUserAsync();
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await GetCurrentUserAsync();
 
-            //    var omg = (from b in context.Books
-            //               join bu in context.BookUsers on b.Id equals bu.BookId
-            //               join au in context.ApplicationUsers on bu.ApplicationUserId equals au.Id
-            //               where au.Id == currentUser.Id
-            //               select new Book
-            //               {
-            //                   Id = b.Id,
-            //                   BookTitle = b.BookTitle,
-            //                   AuthorFirstName = b.AuthorFirstName,
-            //                   AuthorLastName = b.AuthorLastName,
-            //                   Genre = b.Genre,
-            //                   NumberOfPages = b.NumberOfPages,
-            //               }).ToList();
+                var titles = (from b in context.Books
+                              join bu in context.BookUsers on b.Id equals bu.BookId
+                              join au in context.ApplicationUsers on bu.ApplicationUserId equals au.Id
+                              where au.Id == currentUser.Id
+                              select new Book
+                              {
+                                  Id = b.Id,
+                                  BookTitle = b.BookTitle,
+                                  AuthorFirstName = b.AuthorFirstName,
+                                  AuthorLastName = b.AuthorLastName,
+                                  Genre = b.Genre,
+                                  NumberOfPages = b.NumberOfPages,
+                                  ApplicationUserId = ""
+                              }).ToList();
+                
+                foreach (var book in titles)
+                {
 
-            //    var titles = (from bu in context.BookUsers
-            //        .Include(x => x.BookId)
-            //        .Where(x => x.ApplicationUserId == currentUser.Id)
-            //        .FirstOrDefault()
-            //        .ToString();
-            //    ViewBag.bookTitles = new List<string>();
-            //    foreach (var book in titles)
-            //    {
-
-            //        ViewBag.bookTitles.Add(book);
-            //    }
-            //}
+                    ViewBag.bookTitles.Add(book.BookTitle);
+                }
+            }
 
             return View(books);
         }
