@@ -63,7 +63,6 @@ else
                             "AddOtherBooks",
                             "Books",
                             new { bookId = @book.Id , url = "/Books/TheirBooks?userName="+ViewBag.Uname+"&userId="+ViewBag.Uid },
-                            @*new { controller = "Book", action = "TheirBooks",userName = ViewBag.Uname, userId = ViewBag.Uid},*@
                             htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
                 </td>
             }
