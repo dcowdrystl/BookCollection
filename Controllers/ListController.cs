@@ -27,7 +27,7 @@ namespace BookCollection.Controllers
         }*/
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public async Task<IActionResult> IndexAsync(string searchTerm)
+        public IActionResult Index(string searchTerm)
         {
             List<Book> books = context.Books.ToList();
             if (string.IsNullOrEmpty(searchTerm))

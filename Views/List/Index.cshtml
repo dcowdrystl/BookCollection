@@ -85,7 +85,7 @@ else
     @foreach (var book in Model)
     {
         <tr>
-            <td>@book.Id</td>
+            @*<td>@book.Id</td>*@
             <td>@book.BookTitle</td>
             <td>@book.AuthorFirstName</td>
             <td>@book.AuthorLastName</td>
@@ -97,6 +97,7 @@ else
                 }
                 else
                 {*@
+            @if (User.Identity.IsAuthenticated) { 
             <td>
                 @Html.ActionLink(
                         "Add Book",
@@ -105,6 +106,7 @@ else
                         new {bookId = @book.Id},
                         htmlAttributes: new { @class = "btn btn-outline-secondary", @role = "button" })
             </td>
+            }
                 @*}*@
          </tr>
             
