@@ -35,8 +35,8 @@ namespace BookCollection.Controllers
             {
             
                 books = context.Books
-                        .Where(j => j.BookTitle.Contains(searchTerm) || j.AuthorFirstName.Contains(searchTerm)
-                        || j.AuthorLastName.Contains(searchTerm) || j.Genre.Contains(searchTerm))
+                        .Where(j => j.BookTitle.Contains(searchTerm.Trim()) || j.AuthorFirstName.Contains(searchTerm.Trim())
+                        || j.AuthorLastName.Contains(searchTerm.Trim()) || j.Genre.Contains(searchTerm.Trim()))
                         .ToList();
             }
 

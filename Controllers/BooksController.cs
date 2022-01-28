@@ -193,7 +193,7 @@ namespace BookCollection.Controllers
             Book editingBook = context.Books.Find(bookId);
 
             ViewBag.bookToEdit = editingBook;
-            ViewBag.title = "Edit Book " + editingBook.BookTitle + "(id = " + editingBook.Id + ")";
+            ViewBag.title = "Edit : " + editingBook.BookTitle;
             return View();
         }
 
