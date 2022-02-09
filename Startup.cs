@@ -27,17 +27,19 @@ namespace BookCollection
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddDbContext<BookDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<BookDbContext>();
+         /*services.AddDbContext<BookDbContext>(options =>
+             options.UseSqlServer(
+                 Configuration.GetConnectionString("DefaultConnection")));
+         services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+             .AddEntityFrameworkStores<BookDbContext>();*/
 
-            //above this line is new //
-            services.AddControllersWithViews();
-            /*services.AddDbContext<BookDbContext>(options =>
-      options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));*/
-            services.AddRazorPages();
+         //above this line is new //
+
+         services.AddDbContext<BookDbContext>(options =>
+          options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+         services.AddControllersWithViews();
+         services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,11 +48,16 @@ namespace BookCollection
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+               app.UseDatabaseErrorPage();
+
+            
+         }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts(); 
             }
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

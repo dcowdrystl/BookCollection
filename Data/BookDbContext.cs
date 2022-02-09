@@ -17,14 +17,15 @@ namespace BookCollection.Data
         public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
         { 
         }
+      
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
+      //protected override void OnModelCreating(ModelBuilder modelBuilder)
+      //{
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+      //    base.OnModelCreating(modelBuilder);
+      //}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+      protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BookUser>()
                 .HasKey(bu => new { bu.BookId, bu.ApplicationUserId });
