@@ -15,7 +15,7 @@ namespace BookCollection.Models
 
         public int FriendId { get; set; }
 
-        [ForeignKey("FriendId")]
+       [ForeignKey("FriendId")]
         public UserProfile Friend { get; set; }
 
         public Friends(int userId, int friendId)

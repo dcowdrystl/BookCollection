@@ -27,16 +27,16 @@ namespace BookCollection
         public void ConfigureServices(IServiceCollection services)
         {
 
-         /*services.AddDbContext<BookDbContext>(options =>
+         services.AddDbContext<BookDbContext>(options =>
              options.UseSqlServer(
                  Configuration.GetConnectionString("DefaultConnection")));
-         services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+       /*  services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
              .AddEntityFrameworkStores<BookDbContext>();*/
 
          //above this line is new //
 
-         services.AddDbContext<BookDbContext>(options =>
-          options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+         /*services.AddDbContext<BookDbContext>(options =>
+          options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));*/
 
          services.AddControllersWithViews();
          services.AddRazorPages();

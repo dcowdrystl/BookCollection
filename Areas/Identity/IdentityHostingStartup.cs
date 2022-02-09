@@ -18,8 +18,8 @@ namespace BookCollection.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<BookDbContext>(options =>
-                    options.UseMySql(
-                       //options.UseSqlServer(
+                   // options.UseMySql(
+                       options.UseSqlServer(
                         context.Configuration.GetConnectionString("DefaultConnection")));
 
                 services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
