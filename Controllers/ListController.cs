@@ -48,6 +48,7 @@ namespace BookCollection.Controllers
                               join bu in context.BookUsers on b.Id equals bu.BookId
                               join au in context.ApplicationUsers on bu.ApplicationUserId equals au.Id
                               where au.Id == currentUser.Id
+                              orderby b.AuthorLastName ascending
                               select new Book
                               {
                                   Id = b.Id,
