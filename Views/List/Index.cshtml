@@ -63,6 +63,9 @@ else
                 <td>@book.AuthorLastName</td>
                 <td>@book.Genre</td>
                 <td>@book.NumberOfPages</td>
+                <td><a asp-controller="Post" asp-action="NewPost" asp-route-id="@book.Id" class="btn btn-outline-secondary">Add Review</a></td>
+                <td><a asp-controller="Post" asp-action="ShowPost" asp-route-id="@book.Id" class="btn btn-outline-secondary">Reviews</a></td>
+                
                 @if (ViewBag.bookTitles.Contains(book.BookTitle))
                 {
                     <td><button type="button" class="btn btn-secondary" disabled>Already Added</button></td>
