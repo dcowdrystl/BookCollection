@@ -15,7 +15,8 @@ namespace BookCollection.Data
         public DbSet<Friends> Friends { get; set; }
 
         public DbSet<UserProfile> Profiles { get; set; }
-        public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
+        public DbSet<Post> Posts { get; set; }
+      public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
         { 
         }
       
