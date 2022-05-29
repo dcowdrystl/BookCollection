@@ -19,9 +19,10 @@ namespace BookCollection.Models
         //[ForeignKey("ApplicationUserId")]
         public ApplicationUser User { get; set; }
         public string ApplicationUserId { get; set; }
+        public List<Post> Posts { get; set; }
 
-        /*public List<ApplicationUser> Friends { get; set; } = new List<ApplicationUser>();*/
-        public BookUser()
+      /*public List<ApplicationUser> Friends { get; set; } = new List<ApplicationUser>();*/
+      public BookUser()
         {
 
         }

@@ -22,8 +22,9 @@ namespace BookCollection.Models
         public string ApplicationUserId { get; set; }
 
         public IList<BookUser> BookUsers { get; set; }
+        public List<Post> Posts { get; set; }
 
-        public Book()
+      public Book()
         {
         }
 
