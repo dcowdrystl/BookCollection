@@ -3,14 +3,16 @@ using System;
 using BookCollection.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookCollection.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220521041432_InitialMigration6")]
+    partial class InitialMigration6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,14 +141,17 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BookUserApplicationUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int?>("BookUserBookId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CommentUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -163,7 +168,7 @@ namespace BookCollection.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CommentUserId");
 
                     b.HasIndex("PostId");
 
@@ -199,9 +204,6 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<string>("BookUserApplicationUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
@@ -211,18 +213,21 @@ namespace BookCollection.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("LikeUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LikeId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("LikeUserId");
 
                     b.HasIndex("PostId");
 
@@ -450,7 +455,7 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "CommentUser")
                         .WithMany("Comments")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CommentUserId");
 
                     b.HasOne("BookCollection.Models.Post", "CommentPost")
                         .WithMany("Comments")
@@ -482,7 +487,7 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "LikeUser")
                         .WithMany("Likes")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("LikeUserId");
 
                     b.HasOne("BookCollection.Models.Post", "LikePost")
                         .WithMany("Likes")

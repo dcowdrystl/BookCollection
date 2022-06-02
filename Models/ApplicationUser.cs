@@ -17,26 +17,28 @@ namespace BookCollection.Models
 
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string LastName { get; set; }  
-        
-        /*public List<ApplicationUser> Friends { get; set; } = new List<ApplicationUser>();*/
-        //public int BookId { get; set; }
-        
-        //public Book UserBook { get; set; }
+        public string LastName { get; set; }
 
-        //[Required]
-        //[Display(Name = "First Name")]
-        //public string FirstName { get; set; }
+      /*public List<ApplicationUser> Friends { get; set; } = new List<ApplicationUser>();*/
+      //public int BookId { get; set; }
 
-        //[Required]
-        //[Display(Name = "Last Name")]
-        //public string LastName { get; set; }
+      //public Book UserBook { get; set; }
 
-        //[NotMapped]
-        //[Display(Name = "Full Name")]
-        //public string FullName => $"{FirstName} {LastName}";
+      //[Required]
+      //[Display(Name = "First Name")]
+      //public string FirstName { get; set; }
 
-        public ApplicationUser()
+      //[Required]
+      //[Display(Name = "Last Name")]
+      //public string LastName { get; set; }
+
+      //[NotMapped]
+      //[Display(Name = "Full Name")]
+      //public string FullName => $"{FirstName} {LastName}";
+      public List<Post> Posts { get; set; }
+      public List<Like> Likes { get; set; }
+      public List<Comment> Comments { get; set; }
+      public ApplicationUser()
         {
 
         }

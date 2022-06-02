@@ -23,7 +23,9 @@ namespace BookCollection.Models
 
         public IList<BookUser> BookUsers { get; set; }
 
-        public Book()
+        public List<Post> Posts { get; set; }
+
+      public Book()
         {
         }
 

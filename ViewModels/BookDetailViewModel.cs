@@ -8,8 +8,8 @@ namespace BookCollection.ViewModels
     public class BookDetailViewModel
     {
 
-
-        public string BookTitle { get; set; }
+      public int Id { get; set; }
+      public string BookTitle { get; set; }
         public string AuthorFirstName { get; set; }
 
         public string AuthorLastName { get; set; }
@@ -20,7 +20,8 @@ namespace BookCollection.ViewModels
 
         public BookDetailViewModel(Book theBook, IList<UserProfile> userProfiles)
         {
-            BookTitle = theBook.BookTitle;
+            Id = theBook.Id;
+         BookTitle = theBook.BookTitle;
             AuthorFirstName = theBook.AuthorFirstName;
             AuthorLastName = theBook.AuthorLastName;
             Genre = theBook.Genre;

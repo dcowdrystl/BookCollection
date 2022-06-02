@@ -92,7 +92,8 @@ namespace BookCollection.Controllers
                     AuthorLastName = addBookViewModel.AuthorLastName,
                     Genre = addBookViewModel.Genre,
                     NumberOfPages = addBookViewModel.NumberOfPages,
-                    
+                   ApplicationUserId = currentUser.Id,
+
                 };
 
                 Book extantBook = (from b in context.Books where b.BookTitle.ToLower() == newBook.BookTitle.ToLower() select b).FirstOrDefault();

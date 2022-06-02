@@ -15,5 +15,6 @@ namespace BookCollection.ViewModels
         public string AuthorLastName { get; set; }
         public string Genre { get; set; }
         public int NumberOfPages { get; set; }
-    }
+        
+   }
 }

@@ -1,0 +1,18 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace BookCollection.ViewModels
+{
+   public class AddPostViewModel
+   {
+      [Required]
+      [Display(Name = "Review")]
+      public string Content { get; set; }
+
+      /*[Required]
+      public int AlbumRatingNumber {get; set;}*/
+
+      public DateTime CreatedAt { get; set; } = DateTime.Now;
+      public DateTime UpdatedAt { get; set; } = DateTime.Now;
+   }
+}

@@ -3,14 +3,16 @@ using System;
 using BookCollection.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookCollection.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516232937_InitialMigration2")]
+    partial class InitialMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,14 +141,11 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("BookUserApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("BookUserBookId")
+                    b.Property<int>("ApplicationUserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CommentUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -163,11 +162,9 @@ namespace BookCollection.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CommentUserId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("BookUserBookId", "BookUserApplicationUserId");
 
                     b.ToTable("Comments");
                 });
@@ -199,17 +196,11 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("BookUserApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<int?>("BookUserBookId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LikeUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -217,16 +208,14 @@ namespace BookCollection.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LikeId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("LikeUserId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("BookUserBookId", "BookUserApplicationUserId");
 
                     b.ToTable("Likes");
                 });
@@ -238,15 +227,9 @@ namespace BookCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BookUserApplicationUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("BookUserBookId")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -259,16 +242,11 @@ namespace BookCollection.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("PostId");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("BookId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("BookUserBookId", "BookUserApplicationUserId");
 
                     b.ToTable("Posts");
                 });
@@ -450,17 +428,13 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "CommentUser")
                         .WithMany("Comments")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CommentUserId");
 
                     b.HasOne("BookCollection.Models.Post", "CommentPost")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BookCollection.Models.BookUser", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("BookUserBookId", "BookUserApplicationUserId");
                 });
 
             modelBuilder.Entity("BookCollection.Models.Friends", b =>
@@ -482,34 +456,26 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "LikeUser")
                         .WithMany("Likes")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("LikeUserId");
 
                     b.HasOne("BookCollection.Models.Post", "LikePost")
                         .WithMany("Likes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BookCollection.Models.BookUser", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("BookUserBookId", "BookUserApplicationUserId");
                 });
 
             modelBuilder.Entity("BookCollection.Models.Post", b =>
                 {
-                    b.HasOne("BookCollection.Models.Book", "PostBook")
+                    b.HasOne("BookCollection.Models.ApplicationUser", "User")
                         .WithMany("Posts")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BookCollection.Models.Book", "PostBook")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BookCollection.Models.ApplicationUser", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("BookCollection.Models.BookUser", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("BookUserBookId", "BookUserApplicationUserId");
                 });
 
             modelBuilder.Entity("BookCollection.Models.UserProfile", b =>

@@ -3,14 +3,16 @@ using System;
 using BookCollection.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookCollection.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220519211846_InitialMigration3")]
+    partial class InitialMigration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,14 +141,17 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BookUserApplicationUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int?>("BookUserBookId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CommentUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -163,7 +168,7 @@ namespace BookCollection.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CommentUserId");
 
                     b.HasIndex("PostId");
 
@@ -199,9 +204,6 @@ namespace BookCollection.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<string>("BookUserApplicationUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
@@ -211,18 +213,21 @@ namespace BookCollection.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("LikeUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LikeId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("LikeUserId");
 
                     b.HasIndex("PostId");
 
@@ -238,7 +243,7 @@ namespace BookCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
@@ -259,14 +264,11 @@ namespace BookCollection.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("PostId");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("BookUserBookId", "BookUserApplicationUserId");
 
@@ -450,7 +452,7 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "CommentUser")
                         .WithMany("Comments")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CommentUserId");
 
                     b.HasOne("BookCollection.Models.Post", "CommentPost")
                         .WithMany("Comments")
@@ -482,7 +484,7 @@ namespace BookCollection.Migrations
                 {
                     b.HasOne("BookCollection.Models.ApplicationUser", "LikeUser")
                         .WithMany("Likes")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("LikeUserId");
 
                     b.HasOne("BookCollection.Models.Post", "LikePost")
                         .WithMany("Likes")
@@ -497,15 +499,15 @@ namespace BookCollection.Migrations
 
             modelBuilder.Entity("BookCollection.Models.Post", b =>
                 {
+                    b.HasOne("BookCollection.Models.ApplicationUser", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("BookCollection.Models.Book", "PostBook")
                         .WithMany("Posts")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BookCollection.Models.ApplicationUser", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId");
 
                     b.HasOne("BookCollection.Models.BookUser", null)
                         .WithMany("Posts")
